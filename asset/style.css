@@ -453,3 +453,72 @@ a{ color:inherit; }
 @media (hover: none) and (pointer: coarse){
   .field input{ font-size:max(16px, calc(8.8 * var(--u))); }
 }
+
+/* One first-load entrance. The authored layout is the resting frame.
+   Backwards fill holds each opening pose through its delay; when an
+   animation ends, its styles fall away completely. */
+@media (prefers-reduced-motion: no-preference){
+  @keyframes entry-type{
+    from{ opacity:0; transform:translateY(var(--entry-rise)); clip-path:inset(0 0 100% 0); }
+    to{ opacity:1; transform:none; clip-path:inset(0); }
+  }
+  @keyframes entry-soft{
+    from{ opacity:0; transform:translateY(var(--entry-rise)); }
+    to{ opacity:1; transform:none; }
+  }
+  @keyframes entry-control{
+    from{ opacity:0; transform:translateY(var(--entry-rise)) scale(.985); }
+    to{ opacity:1; transform:none; }
+  }
+  @keyframes entry-scene{
+    from{ opacity:0; transform:translateY(calc(12 * var(--su))); }
+    to{ opacity:1; transform:none; }
+  }
+
+  .brand,.lang,.subtitle,.or,.label-email,.label-pass,.forgot,.signup,.join{
+    --entry-rise:calc(5 * var(--u));
+    animation:entry-soft .48s cubic-bezier(.22,1,.36,1) backwards;
+  }
+  .brand{ animation-delay:.06s; }
+  .lang{ animation-delay:.14s; }
+  .subtitle{ animation-delay:.38s; }
+  .or{ animation-delay:.83s; }
+  .label-email{ animation-delay:.91s; }
+  .label-pass,.forgot{ animation-delay:1.07s; }
+  .signup{ animation-delay:1.39s; }
+
+  .title,.headline{
+    --entry-rise:calc(9 * var(--u));
+    animation:entry-type .78s cubic-bezier(.22,1,.36,1) backwards;
+  }
+  .title{ animation-delay:.18s; }
+  .headline{
+    --entry-rise:calc(10 * var(--su));
+    animation-duration:.9s;
+    animation-delay:.34s;
+  }
+
+  .btn-google,.btn-apple,.field-email,.field-pass,.btn-login{
+    --entry-rise:calc(7 * var(--u));
+    animation:entry-control .62s cubic-bezier(.22,1,.36,1) backwards;
+  }
+  .btn-google{ animation-delay:.53s; }
+  .btn-apple{ animation-delay:.63s; }
+  .field-email{ animation-delay:.95s; }
+  .field-pass{ animation-delay:1.11s; }
+  .btn-login{ animation-delay:1.25s; }
+
+  .scene{ animation:entry-scene 1.05s cubic-bezier(.22,1,.36,1) .63s backwards; }
+  .join{
+    --entry-rise:calc(5 * var(--su));
+    animation-delay:1.15s;
+    animation-duration:.56s;
+  }
+}
+
+/* The showcase begins below the opening viewport in the scrolling phone
+   layout, so it is already in its final state when the user reaches it. */
+@media (prefers-reduced-motion: no-preference) and (max-aspect-ratio: 999/1000) and (max-height: 901.98px),
+       (prefers-reduced-motion: no-preference) and (max-aspect-ratio: 999/1000) and (max-width: 376.98px){
+  .headline,.scene,.join{ animation:none; }
+}
